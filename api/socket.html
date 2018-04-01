@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sails.io.js/1.1.13/sails.io.min.js"
+            autoConnect="false"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script type="application/javascript">
+        // without sails client
+        var socket = io.connect('ws://127.0.0.1:1337?__sails_io_sdk_version=0.12.14', {transports: ['websocket']});
+        console.log(socket);
+        socket.on('connect', function () {
+            console.log('connected!');
+            var loginDetails = {
+                 "userName":"testDude",
+                 "password":"testDude"
+             };
+            socket.emit('post', {url: 'ws://127.0.0.1:1337/login', data:loginDetails}, (res) => console.log(res.body) );
+////      socket.emit('greet', { message: 'Hello Mr.Server!' });
+            socket.on('data', function newMessageFromSails (data){
+                 console.log(data.greeting);
+             });
+        });
+        // socket.close(); // for closing
+        // with sails client
+//         var socket = io.sails.connect('http://localhost:1337');
+//         typeof console !== 'undefined' &&
+//         console.log('Connecting Socket.io to Sails.js...');
+//         socket.on('connect', function socketConnected() {
+//             var loginDetails = {
+//                 "userName":"praveen",
+//                 "password":"praveen"
+//             };
+//            // socket.emit('post', {url: 'http://localhost:1337/login', data:loginDetails}, (res) => console.log(res.body) );
+////             socket.emit("ws://localhost:1337/login", loginDetails,function (response) {
+////                 console.log(response);
+////             });
+//             socket.on('data', function newMessageFromSails (data){
+//                 console.log(data.greeting);
+//             });
+//             typeof console !== 'undefined' &&
+//             console.log(
+//                 'Socket is now connected and globally accessible as `socket`.\n' +
+//                 'e.g. to send a GET request to Sails via Socket.io, try: \n' +
+//                 '`socket.get("/foo", function (response) { console.log(response); })`'
+//             );
+//
+//             // Attach a listener which fires every time the server publishes a message:
+//             // message will be called by default on any room
+//             socket.on('message', function newmsg ( msg ) {
+//
+//                 typeof console !== 'undefined' &&
+//                 console.log('New message received from Sails ::\n', msg);
+//
+//             });
+//         });
+//         function login() {
+//             socket.disconnect();
+//             var username = document.getElementById("username").value;
+//             var password = document.getElementById("password").value;
+////             $.ajax({
+////                 url: 'http://localhost:1337/login',
+////                 type: 'post',
+////                 data: loginDetails,
+////                 dataType: 'json',
+////                 async: false,
+////                 success: function(response) {
+////                     io.socket.on('connect', function (){
+////                         console.log("connect");
+////                         io.socket.on('artsAndEntertainment', function (data){
+////                             console.log(data.greeting);
+////                         });
+////                     });
+////                 }
+////             });
+//         }
+//         function signUp() {
+//             var username = document.getElementById("username").value;
+//             var password = document.getElementById("password").value;
+////             $.ajax({
+////                 url: 'http://localhost:1337/signup',
+////                 type: 'post',
+////                 data: loginDetails,
+////                 dataType: 'json',
+////                 async: false,
+////                 success: function(response) {
+////                     io.socket.on('connect', function (){
+////                         console.log("connect");
+////                         io.socket.on('artsAndEntertainment', function (data){
+////                             console.log(data.greeting);
+////                         });
+////                     });
+////                 }
+////             });
+//             var loginDetails = {
+//                 "userName":"praveen1111",
+//                 "password":"praveen"
+//             };
+//             socket.post("wss://localhost:1337/signup", loginDetails,function (response) {
+//                 console.log(response);
+//             });
+//             socket.on('user', function (event){
+//                 console.log(event);
+////                 switch (event.verb) {
+////                     case 'created':
+////                         // This is where code that handles this socket event should go.
+////                         // (e.g. to update the user interface)
+////                         console.log(event);
+////                         // => see below for the contents of `event`
+////                         break;
+////                     default:
+////                         console.warn('Unrecognized socket event (`%s`) from server:',event.verb, event);
+////                 }
+//             });
+//         }
+    </script>
+</head>
+<body>
+praveen
+<input type="text" id="username">
+<input type="password" id="password">
+<button onclick="login()">SUbmit</button>
+<button onclick="signUp()">Signup</button>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+	"auth.policy.noAuthorizationHeaderFound": "noAuthorizationHeaderFound",
+	"auth.policy.invalidToken": "Invalid token",
+	"A brand new app.": "A brand new app."
+}

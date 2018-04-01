@@ -1,0 +1,31 @@
+config:
+  target: "http://localhost:1337"
+  phases:
+    - duration: 1 # seconds
+      arrivalRate: 1 # requests/users
+    - duration: 60
+      arrivalRate: 50
+  processor: "./createFakeUsers.js"
+
+scenarios:
+- name: "Sign up a user and get the token"
+  flow:
+    - post:
+        url: "/signup"
+        json:
+          userName: "user1"
+          password: "password1"
+        capture:
+          - json: "$.token"
+            as: "token"
+    - log: "token is {{ token }}"
+
+    - function: "generateRandomData"
+    - post:
+        url: "/create_user"
+        json:
+          userName: "{{ name }}"
+          password: "{{ password }}"
+        headers:
+          api_key: "{{ token }}"
+    - log: "Sent a request to /create_user with {{ name }}, {{ password }}"
