@@ -17,11 +17,9 @@ for starting application with apache-kafka
     for creating project
         sag new projectName
 
-
    for creating controller 
         sag controller controllerName
-    
-    
+        
     for creating models
         sag model modelName
     
