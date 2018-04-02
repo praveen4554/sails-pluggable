@@ -16,6 +16,7 @@ for starting application with apache-kafka
         npm start
     for creating project
         sag new projectName
+        
    for creating controller 
         sag controller controllerName
         
