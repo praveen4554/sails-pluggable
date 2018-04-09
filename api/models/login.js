@@ -1,4 +1,6 @@
-var bcrypt = require('bcrypt');
+var crypto = require('crypto'),
+    algorithm = 'aes-256-ctr',
+    password = 'd6F3Efeq';
 module.exports = {
     attributes: {
         emailId: {
@@ -10,30 +12,31 @@ module.exports = {
             type: 'string',
             required: true,
         },
-        role: {
-            type: 'string',
-            required: true,
-            enum: ['Admin', 'Employee', 'Employeer'],
-        },
         // relations
         userDetails: {
             model: 'user_details'
         },
-        isPasswordValid: function (passwordHash, cb) {
-            bcrypt.compare(passwordHash, this.passwordHash, function(err, result) {
+        isPasswordValid: function (password, cb) {
+            decrypt(password, function(err, result){
+                if(result === this.password)
+                    cb(undefined,true);
+                else
+                    cb (false,undefined);
+            });
+            bcrypt.compare(password, this.password, function(err, result) {
                 if (err) { cb (err,undefined); }
                 cb(undefined,result);
             });
         }
     },
     beforeCreate: function(user, cb) {
-        logger.info("Before Create")
-        Hashing(user.passwordHash,function (err,hash) {
+         logger.info("Before Create")
+        encrypt(user.password,function (err,hash) {
             if(err) {
                 cb(err);
             }
             else {
-                user.passwordHash = hash;
+                user.password = hash;
                 cb();
             }
         });
@@ -41,31 +44,28 @@ module.exports = {
     },
     beforeUpdate: function(user, cb) {
         logger.info("Before Update")
-        Hashing(user.passwordHash, function (err, hash) {
+        encrypt(user.password, function (err, hash) {
             if (err) {
                 cb(err);
             }
             else {
-                user.passwordHash = hash;
+                user.password = hash;
                 cb();
             }
         });
     }
 };
-function Hashing(passwordHash,cb){
-    logger.info("Hashing......te")
-    if ( passwordHash == null ) {
-        return process.nextTick(function() {
-            cb();
-        });
-    }
-    bcrypt.hash(passwordHash, 10, function(err, hash) {
-        if (err) {
-            console.log(err);
-            cb(err,undefined);
-        } else {
-            cb(undefined,hash);
-        }
 
-    });
+function encrypt(text,cb){
+    var cipher = crypto.createCipher(algorithm,password)
+    var crypted = cipher.update(text,'utf8','hex')
+    crypted += cipher.final('hex');
+    return cb(undefined,crypted);
+}
+
+function decrypt(text,cb){
+    var decipher = crypto.createDecipher(algorithm,password)
+    var dec = decipher.update(text,'hex','utf8')
+    dec += decipher.final('utf8');
+    return cb(undefined,dec);
 }

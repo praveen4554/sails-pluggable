@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tjwebb/sails-swagger.git"
+    "url": "https://github.com/praveen4554/sails-pluggable.git"
   },
   "keywords": [
     "sails",
@@ -21,12 +21,11 @@
     "sdk",
     "documentation"
   ],
-  "author": "Travis Webb <me@traviswebb.com>",
-  "license": "MIT",
+  "author": "praveen",
   "bugs": {
-    "url": "https://github.com/tjwebb/sails-swagger/issues"
+    "url": "https://github.com/praveen4554/sails-pluggable/issues"
   },
-  "homepage": "https://github.com/tjwebb/sails-swagger",
+  "homepage": "https://github.com/praveen4554/sails-pluggable",
   "devDependencies": {
     "artillery": "^1.6.0-12",
     "babel": ">=6.23.0",
@@ -46,7 +45,7 @@
     "@types/express": "^4.0.37",
     "@types/node": "^8.0.34",
     "babel-core": "^6.26.0",
-    "bcrypt": "^1.0.3",
+    "crypto": "^1.0.1",
     "del": "^3.0.0",
     "ejs": "^2.5.7",
     "grunt": "^1.0.1",
